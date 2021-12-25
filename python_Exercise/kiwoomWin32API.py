@@ -1,5 +1,12 @@
 import win32gui
 import win32con
+import win32api
 
-hwnd = win32gui.FindWindow(None, "계산기")
-win32gui.PostMessage(hwnd, win32con.WM_CLOSE, 0, 0)
+hwnd = win32gui.FindWindow(None, "제목 없음 - Windows 메모장")
+edit = win32gui.GetDlgItem(hwnd, 0xF)
+
+win32api.SendMessage(edit, win32con.WM_CHAR, ord('H'), 0)
+win32api.Sleep(100)
+
+win32api.SendMessage(edit, win32con.WM_CHAR, ord('w'), 0)
+win32api.Sleep(100)
