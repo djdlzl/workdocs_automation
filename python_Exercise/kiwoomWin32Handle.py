@@ -25,8 +25,28 @@ def find_window(caption):
     return hwnd
 
 
+def enter_keys(hwnd, data):
+    win32api.SendMessage(hwnd, win32con.EM_SETSEL, 0, -1)
+    win32api.SendMessage(hwnd, win32con.EM_REPLACESEL, 0, data)
+    win32api.Sleep(1000)
+
+
+def click_button(btn_hwnd):
+    win32api.PostMessage(btn_hwnd, win32con.WM_LBUTTONDOWN, 0, 0)
+    win32api.Sleep(100)
+    win32api.PostMessage(btn_hwnd, win32con.WM_LBUTTONUP, 0, 0)
+    win32api.Sleep(300)
+
+
 if __name__ == "__main__":
     caption = "Open API Login"
     hwnd = find_window(caption)
-    print(hwnd)
-    
+
+    edit_id = win32gui.GetDlgItem(hwnd, 0x3E8)
+    edit_pass = win32gui.GetDlgItem(hwnd, 0x3E9)
+    edit_cert = win32gui.GetDlgItem(hwnd, 0x3EA)
+    btn_login = win32gui.GetDlgItem(hwnd, 0x1)
+
+    enter_keys(edit_id, "djdlzl")
+    enter_keys(edit_pass, "547723as")
+    click_button(btn_login)
