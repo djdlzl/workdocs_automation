@@ -26,9 +26,9 @@ def find_window(caption):
 
 
 def enter_keys(hwnd, data):
-    win32api.SendMessage(hwnd, win32con.EM_SETSEL, 0, -1)
+    win32api.PostMessage(hwnd, win32con.EM_SETSEL, 0, -1)
     win32api.SendMessage(hwnd, win32con.EM_REPLACESEL, 0, data)
-    win32api.Sleep(1000)
+    win32api.Sleep(300)
 
 
 def click_button(btn_hwnd):
