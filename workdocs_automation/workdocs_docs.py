@@ -11,9 +11,12 @@ import multiprocessing
 
 
 
-# 시간에 맞게 변경
-dir_date_time = '20221121_07'
-dir_date = '20221121'
+dir_date_time = time.strftime('%Y%m%d-%H', time.localtime())
+dir_date = time.strftime('%Y%m%d', time.localtime())
+date = time.localtime()
+
+workdocs_id = 'noc@bespinglobal.com'
+workdocs_passwd = 'sjaksahffk.123!@#'
 
 
 url = ['https://workdocs-collab-edit-iad.awsapps.com/workdocs/index.html#/mydocs', 
@@ -26,9 +29,8 @@ url_dublin = 'https://workdocs-collab-edit-dub.awsapps.com/workdocs/index.html#/
 url_tokyo = 'https://workdocs-collab-edit-nrt.awsapps.com/workdocs/index.html#/mydocs';
 url_sidney = 'https://workdocs-collab-edit-syd.awsapps.com/workdocs/index.html#/mydocs';
 url_singapore = 'https://workdocs-collab-edit-sin.awsapps.com/workdocs/index.html#/mydocs';
-workdocs_id = 'noc@bespinglobal.com'
-workdocs_passwd = 'sjaksahffk.123!@#'
-test = 'test'
+
+threads = []
 
 
 def init_driver():
@@ -154,28 +156,26 @@ def execute_method(url, i):
     if url[i] == url[5]:
         time.sleep(1);
         driver = init_driver();
-        # handle = driver.window_handles
-        # driver.execute_script('window.open("about:blank", "_blank");')
-        # driver.switch_to.window(handle[i])
         driver.get(url[i]);
         driver.implicitly_wait(10);
         workdocs_login_email(driver);
         driver.implicitly_wait(10);
-        workdocs_enter_directory(driver);
-        # workdocs_enter_directory_date(driver);
+        if date[3] == 3: #시간이 3시일 때는 새 날짜로 폴더 만든 후 시간별 폴더 만들기
+            workdocs_enter_directory_date(driver);
+        else: # 3시 아닐 때는 기존 날짜에 시간별 폴더 만들기
+            workdocs_enter_directory(driver);
         time.sleep(2.5);
         workdocs_create_docs(driver);
     else:
         driver = init_driver();
-        # handle = driver.window_handles
-        # driver.execute_script('window.open("about:blank", "_blank");')
-        # driver.switch_to.window(handle[i])
         driver.get(url[i]);
         driver.implicitly_wait(10);
         workdocs_login_email(driver);
         driver.implicitly_wait(10);
-        workdocs_enter_directory(driver);
-        # workdocs_enter_directory_date(driver);
+        if date[3] == 3: #시간이 3시일 때는 새 날짜로 폴더 만든 후 시간별 폴더 만들기
+            workdocs_enter_directory_date(driver);
+        else: # 3시 아닐 때는 기존 날짜에 시간별 폴더 만들기
+            workdocs_enter_directory(driver);
         time.sleep(2.5);
         workdocs_create_docs(driver);
 
@@ -184,11 +184,19 @@ def execute_method(url, i):
 
 if  __name__  ==  "__main__" :
     
-    start = time.localtime();
+    start = time.time();
     print((start[3]));
     for i in range(len(url)):
         t = threading.Thread(target=execute_method, args=[url, i]);
         t.start();
+
+    for t in threads:
+        t.join();
+
+    end = time.time();
+
+    print("수행시간: %f초" % (end - start));
+    
 
     # driver = init_driver();
     # # handle = driver.window_handles
@@ -202,34 +210,4 @@ if  __name__  ==  "__main__" :
     # workdocs_enter_directory_date(driver);
     # time.sleep(2.5);
     # workdocs_create_docs(driver);
-
-        
-
-    end = time.time();
-
-    print("수행시간: %f초" % (end - start));
     
-
-    
-    # driver.get(url_dublin);    
-    # driver.implicitly_wait(7);
-    # workdocs_login_email(driver);
-    # driver.implicitly_wait(10);
-    # workdocs_enter_directory(driver);
-    # time.sleep(2.5);
-    # workdocs_create_docs(driver);
-
-
-
-    
-
-# driver = uc.Chrome(use_subprocess=True)
-# url = 'https://www.hancomdocs.com/'
-# driver.get(url)
-
-# driver.find_element(By.XPATH, '//*[@id="root"]/div/div[1]/header/div/div/div/div[2]/button[1]').click()
-# time.sleep(2)
-# driver.find_element(By.XPATH, '//*[@id="root"]/div[2]/main/article/div[1]/button[1]').click()
-# driver.find_element(By.XPATH, '//*[@id="identifierId"]').click()
-# driver.find_element(By.XPATH, '//*[@id="identifierId"]').send_keys('trackingitest')
-# driver.find_element(By.XPATH, '//*[@id="identifierNext"]/div/button').click()
