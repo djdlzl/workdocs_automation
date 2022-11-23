@@ -11,8 +11,8 @@ dir_date = time.strftime('%Y%m%d', time.localtime())
 dir_hour = time.strftime('%Y%m%d-%H', time.localtime())
 date = time.localtime()
 
-workdocs_id = 'noc@bespinglobal.com'
-workdocs_passwd = 'sjaksahffk.123!@#'
+workdocs_id = ''
+workdocs_passwd = ''
 
 
 url = ['https://workdocs-collab-edit-iad.awsapps.com/workdocs/index.html#/mydocs', 
@@ -107,12 +107,6 @@ def workdocs_create_docs(driver):
     driver.implicitly_wait(2);
     driver.find_element(By.XPATH, '/html/body/div[1]/div/top-nav/div/div[2]/ul/li[2]/new-button/span/ul/li[1]/a').click();
     time.sleep(25); #docs가 자바스크립트라 implicitly로 하면 안됨.
-    # driver.implicitly_wait(30);
-    # Docs = driver.find_elements(By.XPATH, '//*[@id="page_52524923"]/div[2]/div'); #문서 클릭
-    # driver.execute_script('arguments[0].click();', Docs)
-    # ActionChains.send_keys("test").perform();
-    # driver.find_element(By.XPATH, '//*[@id="page_38743858"]/div[2]/div').send_keys(test); #
-    # time.sleep(5);
     driver.find_element(By.XPATH, '//*[@id="mainContent"]/div/div[2]/div[1]/button').click(); #나가기 버튼
     time.sleep(1.5);
     driver.find_element(By.XPATH, '//*[@id="mainTitleBar"]/div/span/span[2]/secondary-nav/div/ul/li[1]/a').click(); #< 버튼
@@ -163,7 +157,6 @@ if  __name__  ==  "__main__" :
     print("시작시간", start)
     start_time = time.time();
 
-    # for i in range(1):
     for i in range(len(url)):
         t = threading.Thread(target=execute_method, args=[url, i]);
         t.start();
@@ -178,18 +171,4 @@ if  __name__  ==  "__main__" :
     os.system('pause');
 
     
-    
-
-    # driver = init_driver();
-    # # handle = driver.window_handles
-    # # driver.execute_script('window.open("about:blank", "_blank");')
-    # # driver.switch_to.window(handle[i])
-    # driver.get(url[0]);
-    # driver.implicitly_wait(10);
-    # workdocs_login_email(driver);
-    # driver.implicitly_wait(10);
-    # # workdocs_enter_directory(driver);
-    # workdocs_enter_directory_date(driver);
-    # time.sleep(2.5);
-    # workdocs_create_docs(driver);
     
