@@ -2,9 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 import threading
-import pyautogui
+import os
 from workdocs_ID_PASS import *
-
 
 
 dir_year = time.strftime('%Y', time.localtime())
@@ -12,7 +11,6 @@ dir_month = time.strftime('%Y-%m', time.localtime())
 dir_date = time.strftime('%Y%m%d', time.localtime())
 dir_hour = time.strftime('%Y%m%d-%H', time.localtime())
 date = time.localtime()
-
 
 url = ['https://workdocs-collab-edit-iad.awsapps.com/workdocs/index.html#/mydocs', 
 'https://workdocs-collab-edit-dub.awsapps.com/workdocs/index.html#/mydocs', 'https://workdocs-collab-edit-nrt.awsapps.com/workdocs/index.html#/mydocs', 
@@ -28,6 +26,7 @@ def init_driver():
     driver_options = webdriver.ChromeOptions();
     driver_options.add_experimental_option("detach", True);
     driver_options.add_experimental_option("excludeSwitches", ['enable-logging']);
+    driver_options.add_argument("headless")
     driver = webdriver.Chrome(options=driver_options);
     return driver;
     
@@ -39,8 +38,6 @@ def workdocs_login_email(driver):
     driver.find_element(By.XPATH, '//*[@id="emailId"]').send_keys(workdocs_id)
     driver.find_element(By.XPATH, '//*[@id="login"]').click();
     time.sleep(5);
-    if url[i] == url[5]:
-        pyautogui.press('esc');
     driver.implicitly_wait(10);
     driver.find_element(By.XPATH, '//*[@id="wdc_username"]').click();
     driver.find_element(By.XPATH, '//*[@id="wdc_username"]').send_keys(workdocs_id)
@@ -135,17 +132,27 @@ def workdocs_create_docs(driver):
     driver.find_element(By.XPATH, '//*[@id="mainTitleBar"]/div/span/span[2]/secondary-nav/div/ul/li[1]/ul/li[5]/a').click(); #폴더로 나가기
 
 def execute_method(url, i):
-    if url[i] == url[5]:
-        time.sleep(2.5);
     driver = init_driver();
     driver.get(url[i]);
+    print('Start ', url_region[i]);
     driver.implicitly_wait(10);
     workdocs_login_email(driver);
+    print('login', url_region[i]);
+    driver.implicitly_wait(10);
+    print('Start entering directory', url_region[i]);
+    workdocs_enter_directory(driver);
+    time.sleep(2.5);
+    print('Start creating docs', url_region[i]);
+    workdocs_create_docs(driver);
+    print(url_region[i], "complete");
+
     
 
 if  __name__  ==  "__main__" :
     
-    print('브라우저가 켜지는 중입니다. 3~6초 정도 기다려주세요.')
+    start = time.strftime('%H시%M분%S초', time.localtime())
+    print("시작시간", start)
+    start_time = time.time();
 
     for i in range(len(url)):
         t = threading.Thread(target=execute_method, args=[url, i]);
@@ -154,4 +161,11 @@ if  __name__  ==  "__main__" :
 
     for t in threads:
         t.join();
+    
+    end_time = time.time();
+    print('소요시간: ', end_time-start_time)
+
+    os.system('pause');
+
+    
     
