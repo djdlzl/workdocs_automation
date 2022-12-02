@@ -28,9 +28,10 @@ def init_driver():
     driver_options = webdriver.ChromeOptions();
     driver_options.add_experimental_option("detach", True);
     driver_options.add_experimental_option("excludeSwitches", ['enable-logging']);
+    driver_options.add_argument("--disable-gpu")
     driver = webdriver.Chrome(options=driver_options);
     return driver;
-    
+
 
 
 
@@ -102,6 +103,7 @@ def workdocs_enter_directory(driver):
         time.sleep(2.5);
     driver.find_element(By.XPATH, '//*[@id="browse-files"]/ol/li[1]/div[4]/a[2]').click(); # Enter time foler
 
+
 def workdocs_create_docs(driver):
     driver.find_element(By.XPATH, '/html/body/div[1]/div/top-nav/div/div[2]/ul/li[2]/new-button/span/a').click(); #생성 버튼
     driver.implicitly_wait(2);
@@ -134,6 +136,7 @@ def workdocs_create_docs(driver):
     driver.find_element(By.XPATH, '//*[@id="mainTitleBar"]/div/span/span[2]/secondary-nav/div/ul/li[1]/a').click(); #< 버튼
     driver.find_element(By.XPATH, '//*[@id="mainTitleBar"]/div/span/span[2]/secondary-nav/div/ul/li[1]/ul/li[5]/a').click(); #폴더로 나가기
 
+
 def execute_method(url, i):
     if url[i] == url[5]:
         time.sleep(2.5);
@@ -141,10 +144,10 @@ def execute_method(url, i):
     driver.get(url[i]);
     driver.implicitly_wait(10);
     workdocs_login_email(driver);
-    
+
 
 if  __name__  ==  "__main__" :
-    
+
     print('브라우저가 켜지는 중입니다. 3~6초 정도 기다려주세요.')
 
     for i in range(len(url)):

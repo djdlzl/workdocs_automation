@@ -2,7 +2,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 import threading
-import pyautogui
 import sys
 import os
 from workdocs_ID_PASS import *
@@ -30,6 +29,7 @@ def init_driver():
     driver_options = webdriver.ChromeOptions();
     driver_options.add_experimental_option("detach", True);
     driver_options.add_experimental_option("excludeSwitches", ['enable-logging']);
+    driver_options.add_argument("--disable-gpu")
     driver_options.add_argument("headless")
     driver = webdriver.Chrome(options=driver_options);
     return driver;
@@ -41,9 +41,6 @@ def workdocs_login_email(driver):
     driver.find_element(By.XPATH, '//*[@id="emailId"]').click();
     driver.find_element(By.XPATH, '//*[@id="emailId"]').send_keys(workdocs_id)
     driver.find_element(By.XPATH, '//*[@id="login"]').click();
-    time.sleep(5);
-    if url[i] == url[5]:
-        pyautogui.press('esc');
     driver.implicitly_wait(10);
     driver.find_element(By.XPATH, '//*[@id="wdc_username"]').click();
     driver.find_element(By.XPATH, '//*[@id="wdc_username"]').send_keys(workdocs_id)

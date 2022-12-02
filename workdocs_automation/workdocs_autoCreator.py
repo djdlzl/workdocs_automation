@@ -27,6 +27,7 @@ def init_driver():
     driver_options.add_experimental_option("detach", True);
     driver_options.add_experimental_option("excludeSwitches", ['enable-logging']);
     driver_options.add_argument("headless")
+    driver_options.add_argument("--disable-gpu")
     driver = webdriver.Chrome(options=driver_options);
     return driver;
     
