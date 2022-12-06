@@ -12,13 +12,6 @@ dir_date = time.strftime('%Y%m%d', time.localtime())
 dir_hour = time.strftime('%Y%m%d-%H', time.localtime())
 date = time.localtime()
 
-url = ['https://workdocs-collab-edit-iad.awsapps.com/workdocs/index.html#/mydocs', 
-'https://workdocs-collab-edit-dub.awsapps.com/workdocs/index.html#/mydocs', 'https://workdocs-collab-edit-nrt.awsapps.com/workdocs/index.html#/mydocs', 
-'https://workdocs-collab-edit-syd.awsapps.com/workdocs/index.html#/mydocs', 'https://workdocs-collab-edit-sin.awsapps.com/workdocs/index.html#/mydocs', 
-'https://thinkfree.awsapps.com/workdocs/index.html#/mydocs'];
-
-url_region = ['Virginia', 'Dublin', 'Tokyo', 'Sidney', 'Singapore', 'Oregon']
-
 threads = []
 
 

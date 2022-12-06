@@ -12,16 +12,6 @@ dir_date = time.strftime('%Y%m%d', time.localtime())
 dir_hour = time.strftime('%Y%m%d-%H', time.localtime())
 date = time.localtime()
 
-
-
-
-url = ['https://workdocs-collab-edit-iad.awsapps.com/workdocs/index.html#/mydocs', 
-'https://workdocs-collab-edit-dub.awsapps.com/workdocs/index.html#/mydocs', 'https://workdocs-collab-edit-nrt.awsapps.com/workdocs/index.html#/mydocs', 
-'https://workdocs-collab-edit-syd.awsapps.com/workdocs/index.html#/mydocs', 'https://workdocs-collab-edit-sin.awsapps.com/workdocs/index.html#/mydocs', 
-'https://thinkfree.awsapps.com/workdocs/index.html#/mydocs'];
-
-url_region = ['Virginia', 'Dublin', 'Tokyo', 'Sidney', 'Singapore', 'Oregon']
-
 threads = []
 
 
@@ -29,8 +19,8 @@ def init_driver():
     driver_options = webdriver.ChromeOptions();
     driver_options.add_experimental_option("detach", True);
     driver_options.add_experimental_option("excludeSwitches", ['enable-logging']);
-    driver_options.add_argument("--disable-gpu")
     driver_options.add_argument("headless")
+    driver_options.add_argument("--disable-gpu")
     driver = webdriver.Chrome(options=driver_options);
     return driver;
     
